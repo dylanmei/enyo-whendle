@@ -46,6 +46,11 @@ Timekeeping = (function() {
       var minutes = dismiss ? 0 : alarm.snooze || 0;
       return new Service('palm://com.hoopengines.whendle.timekeeping')
         .invoke('snooze', {'id': alarm.id, 'snooze': minutes});
+    },
+
+    check: function() {
+      return new Service('palm://com.hoopengines.whendle.timekeeping')
+        .invoke('check', {});
     }
   });
 
