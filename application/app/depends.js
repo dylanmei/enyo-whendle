@@ -1,0 +1,1 @@
+enyo.depends(  "../lib/",  "../controls/day-picker/",  "app.js",  "scroller.js",  "list.js",  "dialog.js",  "app.css");

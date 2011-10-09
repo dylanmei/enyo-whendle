@@ -1,0 +1,35 @@
+{
+	"id": "com.hoopengines.whendle.timekeeping",
+	"description": "Whendle Timekeeping Service",
+	"engine": "node",
+	"activityTimeout":30,
+	"services": [{
+		"name": "com.hoopengines.whendle.timekeeping",
+		"description": "",
+		"commands": [{
+      "name": "list", 
+      "assistant": "list_service",
+      "public": true
+    }, {
+      "name": "new", 
+      "assistant": "new_service",
+      "public": true
+    }, {
+      "name": "edit", 
+      "assistant": "edit_service",
+      "public": true
+    }, {
+      "name": "delete", 
+      "assistant": "delete_service",
+      "public": true
+    }, {
+      "name": "snooze",
+      "assistant": "snooze_service",
+      "public": true
+    }, {
+      "name": "check",
+      "assistant": "reliability_service",
+      "public": true
+    }]
+	}]
+}

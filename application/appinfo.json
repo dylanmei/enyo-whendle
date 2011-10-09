@@ -1,0 +1,1 @@
+{    "id": "com.hoopengines.whendle",    "version": "2.0.0",    "type": "web",    "main": "index.html",    "title": "Whendle 2",    "icon": "icon.png",    "miniicon": "icon-mini.png",    "vendor": "Hoop Engines",    "noWindow": true,    "dockMode": true,    "uiRevision": 2}

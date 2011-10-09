@@ -1,0 +1,1 @@
+enyo.depends(  "lib/",  "notices.js",  "startup.js");

@@ -1,0 +1,73 @@
+#app {
+  background: url('images/backdrop.png'); 
+}
+
+.scroller {
+  position: relative;
+  left: 0; top: 0;
+}
+
+.list {
+  width: 320px;
+  border-width: 24px 24px 24px;
+  -webkit-border-image: url('images/popup.png') 24 24 24 24 stretch stretch;
+  margin: 10px 0 0 10px;
+ }
+
+.list .tap .enyo-item,
+.list .add-item.tap  {
+  background-color: rgba(40,40,40,0.20);
+}
+
+.list .tap-off .enyo-item,
+.list .add-item.tap-off {
+  background-color: rgba(0,0,0,0);
+  -webkit-transition: background-color 0.50s ease-out;
+}
+
+.list>div:first-of-type {
+  border-bottom: 1px solid rgba(100, 100, 100, 0.5);
+}
+.list>div:last-of-type {
+  border-top: 1px solid rgba(255, 255, 255, 0.5);
+}
+.list [rowIndex]:first-of-type .enyo-item {
+  border-top: none;
+}
+.list [rowIndex]:last-of-type .enyo-item {
+  border-bottom: none;
+}
+
+.list .enyo-item {
+  color: #777;
+}
+
+.list .enyo-item.on {
+  color: black;
+}
+
+.list img {
+  margin: 0 0 10px 50px;
+}
+
+.list .add-item {
+  color: #777;
+  font-size: .9rem;
+  padding: 10px 10px 10px 40px;
+  background: url('images/add-item.png') center left no-repeat;
+}
+
+.dialog {
+  width: 440px;
+}
+
+.dialog .actions {
+  margin-top: 20px;
+}
+
+.day-picker .enyo-button-depressed {
+  color: #fff;
+  font-weight: bold;
+  background-color: #60a1db;  
+}
+

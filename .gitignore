@@ -1,0 +1,6 @@
+.DS_Store
+*.ipk
+application/lib/*.min.js
+services/**/lib/*.min.js
+framework_config.json
+support/*

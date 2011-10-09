@@ -1,0 +1,88 @@
+
+require 'rubygems'
+require 'json'
+require 'yui/compressor'
+require 'fileutils'
+
+task :default => 'run:tcp'
+
+def dependencies
+  array = Array.new
+  File.open('lib.json', 'r').each do |line|
+    JSON.parse(line).each do |name, value|
+      directory = value['directory']
+      directory = directory ? File.join(directory, name, 'lib') : File.join(name, 'lib')
+      value['scripts'].each do |script|
+        array << { :directory => directory, :script => script }
+      end
+    end
+  end
+  array
+end
+
+task :build do
+  puts 'building...'
+  compressor = YUI::JavaScriptCompressor.new(:munge => true)
+  dependencies().each do |d|
+    script = d[:script]
+    directory = d[:directory]
+
+    source = File.join('lib', script)
+    script_name = File.basename(script, '.js')
+    destination = File.join(directory,
+      script_name + '.min.js')
+
+    next if File.exists?(destination) && File.atime(source) < File.atime(destination)
+
+    puts "writing #{script_name}.min.js"
+
+    FileUtils.remove_file destination, directory
+    File.open(destination, "w") do |f|
+      f.write(compressor.compress(File.read(source)))
+    end
+  end
+end
+
+task :package => :build do
+  puts 'packaging...'
+  system('palm-package application package services/timekeeping')
+end
+
+def run(device)
+  app = package_info()
+  system("palm-install -d #{device} #{app[:id]}_#{app[:version]}_all.ipk")
+  system("palm-launch -d #{device} #{app[:id]}")
+end
+
+def setup(device)
+  app = package_info()
+  system("palm-install -d #{device} #{app[:id]}_#{app[:version]}_all.ipk")
+end
+
+def teardown(device)
+  app = package_info()
+  system("palm-install -d #{device} -r #{app[:id]}")
+end
+
+def package_info
+  info = JSON.parse(File.open('package/packageinfo.json').read)
+  {:id => info['id'], :version => info['version']}
+end
+
+task :run => :'run:tcp'
+namespace :run do
+  task :usb => :package do run(:usb); end 
+  task :tcp => :package do run(:tcp); end 
+end
+
+task :setup => :'setup:tcp'
+namespace :setup do
+  task :usb => :package do setup(:usb); end
+  task :tcp => :package do setup(:tcp); end
+end
+
+task :teardown => :'teardown:tcp'
+namespace :teardown do
+  task(:usb) { teardown(:usb) }
+  task(:tcp) { teardown(:tcp) }
+end

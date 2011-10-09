@@ -1,0 +1,16 @@
+[
+	  { "library": { "name": "foundations", "version": "1.0" } }
+  , { "source": "lib/foundations.js" }
+  , { "source": "lib/date.min.js" }
+  , { "source": "lib/recurrence.min.js" }
+  , { "source": "lib/promise.min.js" }
+  , { "source": "lib/database.min.js" }
+  , { "source": "lib/timeout.js" }
+  , { "source": "lib/alarm-mapper.js" }
+  , { "source": "list-service.js" }
+  , { "source": "new-service.js" }
+  , { "source": "edit-service.js" }
+  , { "source": "delete-service.js" }
+  , { "source": "snooze-service.js" }
+  , { "source": "reliability-service.js" }
+]
