@@ -48,7 +48,7 @@ now_service =
       minute: now.minute(),
       timezone: system_time.timezone,
       offset: system_time.offset,
-      declination: -8.834738
+      declination: Sunlight.declination(now)
     };
   }
 

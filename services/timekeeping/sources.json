@@ -6,6 +6,7 @@
   , { "source": "lib/promise.min.js" }
   , { "source": "lib/database.min.js" }
   , { "source": "lib/timeout.js" }
+  , { "source": "lib/sunlight.js"}
   , { "source": "lib/alarm-mapper.js" }
   , { "source": "list-service.js" }
   , { "source": "new-service.js" }
