@@ -19,12 +19,16 @@
       "assistant": "edit_service",
       "public": true
     }, {
-      "name": "delete", 
+      "name": "delete",
       "assistant": "delete_service",
       "public": true
     }, {
       "name": "snooze",
       "assistant": "snooze_service",
+      "public": true
+    }, {
+      "name": "now",
+      "assistant": "now_service",
       "public": true
     }, {
       "name": "check",

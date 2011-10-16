@@ -11,6 +11,7 @@
   , { "source": "new-service.js" }
   , { "source": "edit-service.js" }
   , { "source": "delete-service.js" }
+  , { "source": "now-service.js" }
   , { "source": "snooze-service.js" }
   , { "source": "reliability-service.js" }
 ]

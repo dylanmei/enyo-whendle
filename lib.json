@@ -1,1 +1,1 @@
-{  "application": {    "scripts": [      "date.js",      "promise.js",      "underscore.js"    ]  },  "timekeeping": {    "directory": "services",    "scripts": [      "date.js",      "recurrence.js",      "promise.js",      "underscore.js",      "database.js"    ]  }}
+{  "application": {    "scripts": [      "date.js",      "promise.js",      "underscore.js"    ]  },  "timekeeping": {    "directory": "services",    "scripts": [      "date.js",      "recurrence.js",      "promise.js",      "database.js"    ]  }}
