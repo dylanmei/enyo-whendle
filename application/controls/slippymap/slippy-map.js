@@ -25,6 +25,10 @@
         this.applyStyle('height', height + 'px');
       }
       return this;
+    },
+    time: function(date, declination) {
+      if (this.map) this.map.time(date, declination);      
+      return this;
     }
   };
 

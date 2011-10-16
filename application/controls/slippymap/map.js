@@ -5,7 +5,8 @@ SlippyMap.Map = (function() {
     this.element = element;
     this.service = tile_service;
     this.layers = [
-      new SlippyMap.Surface(this, tile_service)
+      new SlippyMap.Surface(this, tile_service),
+      new SlippyMap.Sunlight(this)
     ];
   }
 
@@ -31,6 +32,12 @@ SlippyMap.Map = (function() {
           height = pair ? arguments[1] : size.height;
       this.element.style.width = (this.width = width) + 'px';
       this.element.style.height = (this.height = height) + 'px';
+      this.refresh();
+    },
+
+    time: function(now, declination) {
+      this.declination = declination;
+      this.hour_angle = ((now.hour() * 60 + now.minute()) - 720) / 4;
       this.refresh();
     },
 
@@ -61,14 +68,18 @@ SlippyMap.Map = (function() {
 
     draw: function() {
       var pos = this.position();
+      var span = this.span();
       var context = {
         x: pos.x,
         y: pos.y,
+        span: span,
         zoom: this.depth,
         width: this.width,
         height: this.height,
         latitude: this.latitude,
-        longitude: this.longitude
+        longitude: this.longitude,
+        declination: this.declination,
+        hour_angle: this.hour_angle
       };
 
       _.each(this.layers, function(layer) {
