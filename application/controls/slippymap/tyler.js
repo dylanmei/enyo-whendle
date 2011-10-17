@@ -1,14 +1,16 @@
-Mapnik = (function() {
+Tyler = (function() {
   var MIN_ZOOM = 1,
       MAX_ZOOM = 16,
       TILE_SIZE = 256,
-      VOID_TEMPLATE = _.template('void.png'),
-      TILE_TEMPLATE = _.template('http://#{subdomain}.tile.openstreetmap.org/#{z}/#{x}/#{y}.png');
+      VOID_TEMPLATE = _.template('../tiles/void.png'),
+      TILE_TEMPLATE = _.template('../tiles/#{z}/#{x}-#{y}.png');
 
-  function Mapnik() {
+  //TILE_TEMPLATE = _.template('http://#{subdomain}.tile.openstreetmap.org/#{z}/#{x}/#{y}.png');
+
+  function Tyler() {
   }
 
-  _.extend(Mapnik.prototype, {
+  _.extend(Tyler.prototype, {
     tile_url: function(x, y, z) {
       var p = service_parameters(x, y, z);
       return p ? TILE_TEMPLATE(p) : VOID_TEMPLATE(p);
@@ -40,5 +42,5 @@ Mapnik = (function() {
     }
   };
 
-  return Mapnik;
+  return Tyler;
 })();
