@@ -9,9 +9,10 @@ body {
 }
 
 .icon {
-	width: 60px;
-	height: 60px;
-	background: url('images/alarm-icon.png');
+	width: 72px;
+	height: 72px;
+	margin: 4px;
+	background: url('images/alarm.png');
 }
 
 .name {
