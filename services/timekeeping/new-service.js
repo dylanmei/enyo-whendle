@@ -7,7 +7,7 @@ new_service =
   Service.prototype = {
     run: function(f) {
       var args = this.controller.args || {};
-      var alarm = AlarmMapper.for_creating(args);
+      var alarm = Mapper.alarm_for_inserting(args);
 
       Database.insert(alarm)
         .success(function(result) {

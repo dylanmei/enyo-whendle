@@ -10,7 +10,7 @@ edit_service =
 
       if (!contains_identity(args))
         return missing_argument(f, 'id');
-      var alarm = AlarmMapper.for_merging(args);
+      var alarm = Mapper.alarm_for_updating(args);
 
       Database.update(alarm)
         .success(function(result) {

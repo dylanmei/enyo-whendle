@@ -7,7 +7,7 @@
   , { "source": "lib/database.min.js" }
   , { "source": "lib/timeout.js" }
   , { "source": "lib/sunlight.js"}
-  , { "source": "lib/alarm-mapper.js" }
+  , { "source": "lib/mapper.js" }
   , { "source": "list-service.js" }
   , { "source": "new-service.js" }
   , { "source": "edit-service.js" }

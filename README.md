@@ -16,4 +16,7 @@ alarms post
 
 alarms delete
   => luna-send -n 1 palm://com.hoopengines.whendle.timekeeping/delete '{"id":"XXXX"}'
+
+copy files to emulator (in a separate terminal)
+  => scp -P 5522 file.mp3 root@localhost:/media/internal
 -->
