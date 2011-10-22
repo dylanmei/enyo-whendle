@@ -45,7 +45,7 @@ end
 
 task :package => :build do
   puts 'packaging...'
-  system('palm-package application package services/timekeeping')
+  system('palm-package package application services/timekeeping')
 end
 
 def run(device)

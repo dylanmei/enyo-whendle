@@ -77,7 +77,11 @@ Timekeeping = (function() {
     },
 
     check: function() {
-      return new Service(TIMEKEEPING_URL).invoke('check', {});
+      return new Service(TIMEKEEPING_URL)
+        .invoke('check', {})
+        .failure(function(response) {
+          _.log(response);
+        });
     }
   });
 
