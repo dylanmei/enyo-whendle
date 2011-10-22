@@ -20,7 +20,7 @@
       ]},
 
       { kind: 'DayPicker', name: 'days' },
-      { kind: 'Button', name: 'music', caption: 'Music', onclick: 'on_pick_music' },
+      { kind: 'Button', name: 'music', caption: '', onclick: 'on_pick_music' },
 
       { kind: 'HFlexBox', className: 'actions', components: [
         { kind: 'Button', name: 'remove', caption: 'Remove', onclick: 'on_delete', className: 'enyo-button-negative' },
@@ -30,7 +30,7 @@
       ]},
 
       { kind: 'FilePicker', name: 'picker', allowMultiSelect: false,
-        fileType: 'audio', currentRingtonePath: "/media/internal/ringtones/Pre.mp3",
+        fileType: 'audio', //currentRingtonePath: "/media/internal/ringtones/Pre.mp3",
         onPickFile: 'on_change_music'
       },
     ],
@@ -52,9 +52,7 @@
 
       this.$.name.setValue(alarm.name || '');
       this.$.active.setState(alarm.on || false);
-      if (alarm.snooze)
-        this.$.snooze.setValue(snooze_value_to_text(alarm.snooze));
-      
+
       this.$.time.setValue(time);
       this.$.days.setSunday(alarm.sunday);
       this.$.days.setMonday(alarm.monday);
@@ -64,14 +62,21 @@
       this.$.days.setFriday(alarm.friday);
       this.$.days.setSaturday(alarm.saturday);
 
+      if (alarm.snooze)
+        this.$.snooze.setValue(snooze_value_to_text(alarm.snooze));
+      this.$.music.setCaption(sound_path_to_text(alarm.sound));
+
       this.$.remove.setShowing(!_.isUndefined(alarm.id))
     },
     on_pick_music: function() {
+      this.$.picker.currentRingtonePath =
+        sound_text_to_path(this.$.music.getCaption());
       this.$.picker.pickFile();
     },
-    on_change_music: function() {
-      _.log('change music');
-      // _.log(arguments);
+    on_change_music: function(sender, files) {
+      if (files && files.length) {
+        this.$.music.setCaption(files[0].fullPath);
+      }
     },
     on_cancel: function() {
       this.close();
@@ -98,7 +103,8 @@
       this.alarm.hour = this.$.time.getValue().hour();
       this.alarm.minute = this.$.time.getValue().minute();
       this.alarm.snooze = snooze_text_to_value(this.$.snooze.getValue())
-      
+      this.alarm.sound = sound_text_to_path(this.$.music.getCaption());
+
       var self = this;
       _.trigger('alarms:save', {
         alarm: this.alarm,
@@ -118,6 +124,16 @@
       on: true, snooze: 10,
       monday: true, tuesday: true, wednesday: true, thursday: true, friday: true
     };
+  }
+
+  function sound_path_to_text(path) {
+    if (!path || path == '') return 'sound: Audrey by jack_ripper';
+    return path;
+  }
+
+  function sound_text_to_path(text) {
+    if (!text || text == 'sound: Audrey by jack_ripper') return '';
+    return text;
   }
 
   function snooze_value_to_text(value) {
