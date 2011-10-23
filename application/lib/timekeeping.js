@@ -47,9 +47,18 @@ Timekeeping = (function() {
 
     tick: function() {
       if (Now.date) return;
+
       Timekeeping.now()
+        .failure(function(response) {
+          Now.offset = 0;
+          Now.date = new Date()
+            .second(0).millisecond(0);
+        })
         .success(function(response) {
           response = response.time;
+          Now.timezone = response.timezone;
+          Now.offset = response.offset;
+          Now.declination = response.declination;
           Now.date = new Date()
             .year(response.year)
             .month(response.month)
@@ -57,10 +66,8 @@ Timekeeping = (function() {
             .hour(response.hour)
             .minute(response.minute)
             .second(0).millisecond(0);
-
-          Now.timezone = response.timezone;
-          Now.offset = response.offset;
-          Now.declination = response.declination;
+        })
+        .complete(function() {
           trigger_tick();
           Now.timer = new Timer(on_micro_tick);
         });

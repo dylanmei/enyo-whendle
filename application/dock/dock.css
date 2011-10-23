@@ -1,0 +1,27 @@
+#dock {
+  background: #000
+}
+
+.clock {
+  position: absolute;
+  left: 20px; top: 0;
+  z-index: 99;
+  color: #fff;
+  font-size: 4rem;
+}
+
+.overlay {
+  position: absolute;
+  z-index: 100;
+  left: 0; top: 0;
+  width: 1024px;
+  height: 768px;
+  opacity: 0;
+  background-image: url('images/overlay.jpg');
+}
+
+.darken .overlay {
+  opacity: 0.6;
+  -webkit-transition: opacity 10s ease;
+}
+
