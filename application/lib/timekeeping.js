@@ -105,6 +105,7 @@ Timekeeping = (function() {
   function trigger_tick() {
     _.trigger('clock:tick', {
       now: Now.date,
+      offset: Now.offset,
       declination: Now.declination
     });
   }

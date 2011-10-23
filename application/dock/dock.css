@@ -11,17 +11,18 @@
 }
 
 .overlay {
-  position: absolute;
-  z-index: 100;
-  left: 0; top: 0;
-  width: 1024px;
-  height: 768px;
+  position: fixed;
+  top: 0px;
+  right: 0px;
+  left: 0px;
+  bottom: 0px;
   opacity: 0;
-  background-image: url('images/overlay.jpg');
+  z-index: 100;
+  background: black;
 }
 
 .darken .overlay {
-  opacity: 0.6;
-  -webkit-transition: opacity 10s ease;
+  opacity: 0.65;
+  -webkit-transition-property: opacity;
+  -webkit-transition-duration: 5s;
 }
-
