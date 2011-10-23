@@ -1,5 +1,5 @@
 Timekeeping = (function() {
-  var TIMEKEEPING_URL = 'palm://com.hoopengines.whendle.timekeeping';
+  var TIMEKEEPING_URL = 'palm://com.hoopengines.whendle.timekeeping.service';
   var Now = {
   };
 

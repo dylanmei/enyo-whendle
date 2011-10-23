@@ -1,10 +1,10 @@
 {
-	"id": "com.hoopengines.whendle.timekeeping",
+	"id": "com.hoopengines.whendle.timekeeping.service",
 	"description": "Whendle Timekeeping Service",
 	"engine": "node",
 	"activityTimeout":30,
 	"services": [{
-		"name": "com.hoopengines.whendle.timekeeping",
+		"name": "com.hoopengines.whendle.timekeeping.service",
 		"description": "",
 		"commands": [{
       "name": "list", 

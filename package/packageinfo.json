@@ -7,6 +7,6 @@
   "vendorurl": "hoopengines.com",
   "app": "com.hoopengines.whendle",
   "services": [
-    "com.hoopengines.whendle.timekeeping"
+    "com.hoopengines.whendle.timekeeping.service"
   ]
 }

@@ -4,7 +4,7 @@ reliability_service =
   var Frequency = '00:20:00';
   var NextCheck = {
     'key':    'com.hoopengines.whendle.reliability',
-    'uri':    'palm://com.hoopengines.whendle.timekeeping/check',
+    'uri':    'palm://com.hoopengines.whendle.timekeeping.service/check',
     'params': '{}',
     'wakeup': false,
     'in': Frequency
