@@ -15,13 +15,10 @@ Timekeeping = (function() {
       var p = new Promise();
       Timekeeping.list()
         .success(function(response) {
-          var alarm = response.results
-            ? _.detect(response.results, function(result) {
-                return result.id == identity;
-              })
-            : undefined;
-          
-          p.resolve(alarm);
+          var alarm = _.detect(response.results, function(result) {
+            return result.id == identity;
+          });
+          alarm ? p.resolve(alarm) : p.reject();
         })
         .failure(function(response) {
           p.reject(response);
