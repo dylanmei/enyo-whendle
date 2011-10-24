@@ -66,6 +66,21 @@
   margin-top: 20px;
 }
 
+.dialog .content {
+  margin: 10px;
+  font-size: 0.75rem;
+}
+
+.about-dialog .name {
+  font-size: 0.9rem;
+}
+
+.about-dialog .vendor {
+  font-size: 0.75rem;
+  font-style: italic;
+  color: #666;
+}
+
 .day-picker .enyo-button-depressed {
   color: #fff;
   font-weight: bold;
