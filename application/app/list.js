@@ -22,6 +22,7 @@
       this.bind();
       enyo.keyboard.setResizesWindow(false);
       this.scroller = this.parent.parent;
+      this.time_formatter = new enyo.g11n.DateFmt({time:'short'});
       _.defer(_.bind(this.load, this));
     },
 
@@ -85,7 +86,10 @@
         .minute(alarm.minute);
 
       this.$.name.setContent(alarm.name || '');
-      this.$.time.setContent(date.hh12);
+      this.$.time.setContent(
+        this.time_formatter.format(date)
+      );
+//      this.$.time.setContent(date.hh12);
 
       alarm.on
         ? this.$.item.addClass('on')
