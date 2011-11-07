@@ -4,10 +4,19 @@
 
 .clock {
   position: absolute;
-  left: 20px; top: 0;
+  right: 20px; top: 0;
   z-index: 100;
-  color: rgba(255, 255, 255, 0.8);
+  text-align: right;
+}
+
+.clock .time {
   font-size: 4rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.clock .date {
+  font-size: 1.5rem;
+  color: rgba(255, 255, 255, 0.7);
 }
 
 .dimmer {
