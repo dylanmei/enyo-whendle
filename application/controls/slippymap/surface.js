@@ -67,7 +67,6 @@ SlippyMap.Surface = (function() {
         this.style.visibility = 'visible';
       };
       image.onerror = function() {
-        _.log('error loading image');
       };
       image.onselectstart = function() { return false; };
       image.onmousemove = function() { return false; };

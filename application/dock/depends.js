@@ -1,1 +1,1 @@
-enyo.depends(  "../lib/",  "../controls/dimmer/",  "../controls/slippymap/",  "dock.js",  "dock.css");
+enyo.depends(  "../lib/",  "../controls/dimmer/",  "../controls/slippymap/",  "../controls/preferences/",  "dock.js",  "dock.css");

@@ -15,7 +15,7 @@ reliability_service =
 
   Service.prototype = {
     run: function(f) {
-      console.log('reliability check');
+      //console.log('reliability check');
 
       var query = {'from':'com.hoopengines.alarm:1'};
       Database.find(query)
@@ -26,7 +26,7 @@ reliability_service =
 
               Timeout.set(NextCheck)
                 .complete(function(result) {
-                  console.log('reliability scheduled next check');
+                  //console.log('reliability scheduled next check');
                   f.result = true;
                 });
             });
