@@ -55,6 +55,11 @@
       this.$.overlay.applyStyle('opacity', value);
     },
 
+    clickHandler: function(sender, e) {
+      if (sender.name != 'overlay')
+        e.stopPropagation();
+    },
+
     mousedownHandler: function(sender) {
       if (sender.hasClass('enyo-custom-button'))
         this.doChanging(this.position);
