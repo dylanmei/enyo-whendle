@@ -37,7 +37,7 @@
     },
 
     on_link_clicked: function(sender, href) {
-      window.location(href);
+      window.location = href;
     }
   };
 
