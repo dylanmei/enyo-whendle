@@ -12,16 +12,28 @@
           { name: 'vendor', className: 'vendor', content: 'by Dylan Meissner / Hoop Engines' },
         ]}
       ]},
-      { kind: enyo.VFlexBox, autoVertical: false, components: [
-        { kind: enyo.Spacer },
-        { kind: 'HtmlContent', srcId: 'about', className: 'content', onLinkClick: 'on_link_clicked' },
-        { kind: enyo.Spacer }
-      ]}
+      { kind: 'HtmlContent', srcId: 'about-description', onLinkClick: 'linkHandler' },
+      { kind: 'RowGroup', components: [
+        { layoutKind: 'HFlexLayout', onclick: 'helpHandler', components: [
+          { kind: 'Image', src: 'images/info.png' },
+          { content: 'How to use Whendle', flex: 1 }
+        ]},
+        { layoutKind: 'HFlexLayout', onclick: 'feedbackHandler', components: [
+          { kind: 'Image', src: 'images/mail.png' },
+          { content: 'Leave feedback', flex: 1 }
+        ]},
+        { layoutKind: 'HFlexLayout', onclick: 'sourceHandler', components: [
+          { kind: 'Image', src: 'images/donut.png' },
+          { content: 'Whendle is open source!', flex: 1 }
+        ]}
+      ]},
+      { kind: 'HtmlContent', srcId: 'about-attribution', onLinkClick: 'linkHandler' }
     ],
     create: function() {
       this.addClass('dialog');
       this.addClass('about-dialog');
       this.inherited(arguments);
+      this.version = enyo.fetchAppInfo().version;
     },
     open: function(alarm) {
       this.setBoundsInfo("applyCenterBounds", []);
@@ -29,14 +41,25 @@
     },
     afterOpen: function() {
       this.inherited(arguments);
-      this.$.name.setContent('Whendle v' +
-        enyo.fetchAppInfo().version);
+      this.$.name.setContent('Whendle v' + this.version);
     },
     close: function(){
       this.inherited(arguments);
     },
 
-    on_link_clicked: function(sender, href) {
+    helpHandler: function() {
+      window.location = 'http://whendle.com/help/' + this.version;
+    },
+
+    feedbackHandler: function() {
+      window.location = 'mailto:whendle.app@gmail.com?subject=Regarding%20Whendle%20' + this.version + '...';
+    },
+
+    sourceHandler: function() {
+      window.location = 'http://github.com/dylanmei/Whendle2';
+    },
+
+    linkHandler: function(sender, href) {
       window.location = href;
     }
   };

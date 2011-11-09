@@ -62,13 +62,19 @@
   width: 440px;
 }
 
-.dialog .actions {
-  margin-top: 20px;
+.about-dialog {
+  width: 420px;
+  font-size: 0.75rem;
+  padding: 0 10px 10px;
 }
 
-.dialog .content {
-  margin: 10px;
-  font-size: 0.75rem;
+.about-dialog p {
+  padding: 0;
+  margin: 10px 0 0 0;
+}
+
+.about-dialog p:last-child {
+  margin: 10px 0;  
 }
 
 .about-dialog .name {
@@ -79,6 +85,44 @@
   font-size: 0.75rem;
   font-style: italic;
   color: #666;
+}
+
+.about-dialog .attribution {
+  font-size: 0.65rem;
+  line-height: 0.85rem;
+}
+
+.about-dialog .attribution a {
+  color: red;
+}
+
+.about-dialog p.construction {
+  padding: 4px;
+  font-size: 0.6rem;
+  background-image: url('images/construction.png');
+}
+
+.about-dialog .enyo-item {
+  padding: 6px 10px;
+}
+
+.about-dialog .enyo-item>div {
+  padding: 6px 0 0 10px;
+}
+
+.about-dialog .copyright {
+  font-size: 0.65rem;
+  font-style: italic;
+  color: #666;
+}
+
+.about-dialog .song,
+.about-dialog .artist {
+  font-weight: bold;
+  font-style: italic;
+}
+
+.about-dialog .album {
 }
 
 .day-picker .enyo-button-depressed {
