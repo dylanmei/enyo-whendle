@@ -1,0 +1,5 @@
+
+default.mp3
+  sound: Fire Alarm
+  artist: Benboncan at freesound.org (http://www.freesound.org/people/Benboncan)
+  description: A stereo recording of a fire alarm cut to loop. Rode NT-4 > FEL battery pre-amp > Zoom H2 line in

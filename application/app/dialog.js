@@ -133,12 +133,12 @@
   }
 
   function sound_path_to_text(path) {
-    if (!path || path == '') return 'sound: Audrey by jack_ripper';
+    if (!path || path == '') return 'sound: Fire Alarm';
     return path;
   }
 
   function sound_text_to_path(text) {
-    if (!text || text == 'sound: Audrey by jack_ripper') return '';
+    if (!text || text == 'sound: Fire Alarm') return '';
     return text;
   }
 
