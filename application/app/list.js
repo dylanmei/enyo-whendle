@@ -5,7 +5,7 @@
     name: 'App.Alarms',
     className: 'alarms list',
     components: [
-      { kind: 'Image', src: 'images/whendle-2.0.0.png' },
+      { kind: 'Image', src: 'images/whendle.png' },
       { kind: 'VirtualRepeater', name: 'repeater', onSetupRow: 'on_render_item', components: [
         { kind: 'Item', name: 'item', layoutKind: 'HFlexLayout', components: [
           { name: 'name', flex: 1 },
