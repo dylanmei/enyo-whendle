@@ -56,7 +56,7 @@
     },
 
     sourceHandler: function() {
-      window.location = 'http://github.com/dylanmei/Whendle2';
+      window.location = 'https://github.com/dylanmei/enyo-whendle';
     },
 
     linkHandler: function(sender, href) {
