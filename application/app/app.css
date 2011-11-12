@@ -2,6 +2,13 @@
   background: url('images/backdrop.png'); 
 }
 
+.spinner {
+  position: absolute;
+  z-index: 500;
+  top: 20px;
+  right: 20px;
+}
+
 .scroller {
   position: absolute;
   z-index: 100;
