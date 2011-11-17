@@ -32,7 +32,7 @@ task :build do
     destination = File.join(directory,
       script_name + '.min.js')
 
-    next if File.exists?(destination) && File.atime(source) < File.atime(destination)
+    next if File.exists?(destination) && File.mtime(source) < File.mtime(destination)
 
     puts "writing #{script_name}.min.js"
 
