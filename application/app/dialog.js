@@ -64,15 +64,12 @@
 
       if (alarm.snooze)
         this.$.snooze.setValue(snooze_value_to_text(alarm.snooze));
-      this.$.music.setCaption(sound_path_to_text(alarm.sound));
-      
-      if (!_.isUndefined(alarm.id)) {
-        this.$.remove.setShowing(true)
-      }
 
-      if (this.$.name.getValue() == '') {
+      this.$.music.setCaption(sound_path_to_text(alarm.sound));
+      this.$.remove.setShowing(!(alarm.id === undefined));
+
+      if (this.$.name.getValue() == '')
         this.$.name.forceFocus();
-      }
     },
     on_pick_music: function() {
       this.$.picker.currentRingtonePath =
