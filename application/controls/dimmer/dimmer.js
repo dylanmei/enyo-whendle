@@ -5,11 +5,13 @@
     className: 'dimmer', cssNamespace: 'dimmer',
     published: { minimum: 0.0, maximum: 1.0, position: 0.0 },    
     events: { onChanging: '', onChanged: '' },
+    layoutKind: 'HFlexLayout',
     chrome: [
-      { name: 'overlay', className: 'dimmer-overlay' },
+      { className: 'dark-icon' },
       { name: 'slider', kind: 'Slider', className: 'dimmer-slider',
         onChange: 'changed', onChanging: 'changing'
-      }
+      },
+      { className: 'lite-icon' }
     ],
 
     create: function() {
@@ -19,7 +21,6 @@
 
     positionChanged: function() {
       this.rangeChanged();
-      this.applyPosition(this.position);
     },
 
     minimumChanged: function() {
@@ -37,27 +38,17 @@
       if (this.position > this.maximum) this.position = this.maximum;
       this.$.slider.setMinimum(this.minimum * 100);
       this.$.slider.setMaximum(this.maximum * 100);
-      this.$.slider.setPosition(this.position * 100);
+      this.$.slider.setPosition((this.maximum - this.minimum - this.position) * 100);
     },
 
     changed: function(sender, value) {
-      this.setPosition(value / 100);
+      this.setPosition((this.maximum - this.minimum) - (value / 100));
       this.doChanged(this.position);
     },
 
     changing: function(sender, value) {
-      this.setPosition(value / 100);
+      this.setPosition((this.maximum - this.minimum) - (value / 100));
       this.doChanging(this.position);
-    },
-
-    applyPosition: function(value) {
-      this.position = value;
-      this.$.overlay.applyStyle('opacity', value);
-    },
-
-    clickHandler: function(sender, e) {
-      if (sender.name != 'overlay')
-        e.stopPropagation();
     },
 
     mousedownHandler: function(sender) {

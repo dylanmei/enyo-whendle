@@ -19,24 +19,27 @@
   color: rgba(255, 255, 255, 0.6);
 }
 
-.dimmer {
+.dimness {
   position: absolute;
   z-index: 99;
-  top: 0; left: 0;
+  top: 0, left: 0;
   width: 100%; height: 100%;
+  background-color: #000;
+  opacity: 0.8;
 }
 
-.dimmer-slider {
-  display: none;
-  -webkit-transition: opacity .5s ease-out;  
+.enyo-toolbar {
+  position: absolute;
+  z-index: 100;
+  bottom: -60px;
+  width: 100%;
+  -webkit-transition: bottom .25s ease-out; 
 }
 
-.dimmer-hide-slider .dimmer-slider {
-  opacity: 0;
-  display: block;
+.hide-toolbar {
+  bottom: -60px;
 }
 
-.dimmer-show-slider .dimmer-slider {
-  opacity: 1;
-  display: block;
+.show-toolbar {
+  bottom: 0px;
 }
