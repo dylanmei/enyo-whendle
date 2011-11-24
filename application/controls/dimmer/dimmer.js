@@ -16,7 +16,7 @@
 
     create: function() {
       this.inherited(arguments);
-      this.positionChanged();
+      this.rangeChanged();
     },
 
     positionChanged: function() {
@@ -38,22 +38,26 @@
       if (this.position > this.maximum) this.position = this.maximum;
       this.$.slider.setMinimum(this.minimum * 100);
       this.$.slider.setMaximum(this.maximum * 100);
-      this.$.slider.setPosition((this.maximum - this.minimum - this.position) * 100);
+//      this.$.slider.setPosition((this.maximum - this.minimum - this.position) * 100);
+      this.$.slider.setPosition(this.position * 100);
     },
 
     changed: function(sender, value) {
-      this.setPosition((this.maximum - this.minimum) - (value / 100));
+//      this.position = (this.maximum - this.minimum) - (value / 100);
+this.position = value / 100;
       this.doChanged(this.position);
     },
 
     changing: function(sender, value) {
-      this.setPosition((this.maximum - this.minimum) - (value / 100));
+//      this.position = (this.maximum - this.minimum) - (value / 100);
+this.position = value / 100;
       this.doChanging(this.position);
     },
 
     mousedownHandler: function(sender) {
-      if (sender.hasClass('enyo-custom-button'))
+      if (sender.hasClass('enyo-custom-button')) {
         this.doChanging(this.position);
+      }
     }
   };
 

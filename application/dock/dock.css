@@ -26,20 +26,17 @@
   width: 100%; height: 100%;
   background-color: #000;
   opacity: 0.8;
+  pointer-events: none;
 }
 
 .enyo-toolbar {
   position: absolute;
   z-index: 100;
-  bottom: -60px;
+  bottom: 0;
   width: 100%;
   -webkit-transition: bottom .25s ease-out; 
 }
 
 .hide-toolbar {
   bottom: -60px;
-}
-
-.show-toolbar {
-  bottom: 0px;
 }

@@ -8,6 +8,7 @@ SlippyMap.Map = (function() {
       new SlippyMap.Surface(this, tile_service),
       new SlippyMap.Sunlight(this)
     ];
+    this.tracker = new EventHandler(this);
   }
 
   _.extend(Map.prototype, {
@@ -21,7 +22,8 @@ SlippyMap.Map = (function() {
 
     go: function(latitude, longitude, depth) {
       this.depth = depth;
-      this.latitude = normalize_latitude(latitude, this.depth);
+      if (!this.latitude)
+        this.latitude = normalize_latitude(latitude, this.depth);
       this.longitude = normalize_longitude(longitude, this.depth);
       this.refresh();
     },
@@ -53,6 +55,10 @@ SlippyMap.Map = (function() {
       return Math.pow(2, this.depth) * this.service.tile_size();
     },
 
+    track: function(on) {
+      on ? this.tracker.bind() : this.tracker.unbind();
+    },
+
     refresh: function() {
       if (this.ready) this.draw();
       else {
@@ -67,21 +73,7 @@ SlippyMap.Map = (function() {
     },
 
     draw: function() {
-      var pos = this.position();
-      var span = this.span();
-      var context = {
-        x: pos.x,
-        y: pos.y,
-        span: span,
-        zoom: this.depth,
-        width: this.width,
-        height: this.height,
-        latitude: this.latitude,
-        longitude: this.longitude,
-        declination: this.declination,
-        hour_angle: this.hour_angle
-      };
-
+      var context = new DrawContext(this);
       _.each(this.layers, function(layer) {
         if (layer.draw) layer.draw(context);
       });
@@ -107,7 +99,7 @@ SlippyMap.Map = (function() {
     var pair = _.isNumber(position),
       x = pair ? arguments[0] : position.x,
       y = pair ? arguments[1] : position.y,
-      z = pair ? arguments[2] : zoom;
+      z = pair ? arguments[2] : span;
 
     var latitude = (2 * Math.atan(Math.exp((1 - 2 * y / span) * Math.PI)) - Math.PI / 2) * (180 / Math.PI);
     var longitude = (x - span / 2) / (span / 360);
@@ -125,6 +117,180 @@ SlippyMap.Map = (function() {
   function normalize_longitude(longitude) {
     return (longitude + 180) % 360 + (longitude < -180 ? 180 : -180);
   }
+
+  var DrawContext = function(map) {
+    var pos = map.position();
+
+    this.x = pos.x;
+    this.y = pos.y;
+    this.span = map.span();
+    this.zoom = map.depth;
+    this.width = map.width;
+    this.height = map.height;
+    this.latitude = map.latitude;
+    this.longitude = map.longitude;
+    this.declination = map.declination;
+    this.hour_angle = map.hour_angle;
+  };
+
+  _.extend(DrawContext.prototype, {
+    location_to_position: function(location) {
+      var args = [].splice.call(arguments, 0);
+      args.push(this.span);
+      return location_to_position.apply(null, args);
+    },
+
+    position_to_location: function(position) {
+      var args = [].splice.call(arguments, 0);
+      args.push(this.span);
+      return position_to_location.apply(null, args);
+    }    
+  });
+
+  var EventHandler = function(map) {
+    this.map = map;
+    this.element = map.element;
+    this.tap_timer = null;
+  };
+
+  _.extend(EventHandler.prototype, {
+    bind: function() {
+      var element = this.element;
+      if (!this.pressHandler) {
+        this.pressHandler = _.throttle(_.bind(this.press, this), 100);
+        element.addEventListener('mousedown', this.pressHandler, false);
+      }
+      if (!this.releaseHandler) {
+        this.releaseHandler = _.throttle(_.bind(this.release, this), 100);
+        element.addEventListener('mouseup', this.releaseHandler, false);
+        element.addEventListener('mouseout', this.releaseHandler, false);
+      }
+      if (!this.moveHandler) {
+        this.moveHandler = _.bind(this.move, this);
+        element.addEventListener('mousemove', this.moveHandler, false);
+      }
+    },
+    unbind: function() {
+      var element = this.element;
+      if (this.pressHandler) {
+        element.removeEventListener('mousedown', this.pressHandler)
+        delete this.pressHandler;          
+      }
+      if (this.releaseHandler) {
+        element.removeEventListener('mouseup', this.pressHandler)
+        element.removeEventListener('mouseout', this.pressHandler)
+        delete this.releaseHandler;
+      }
+      if (this.moveHandler) {
+        element.removeEventListener('mousemove', this.moveHandler)
+        delete this.moveHandler;          
+      }
+    },
+    interactive: function() {
+      return !_.isUndefined(this.map.ready) && this.map.ready;
+    },
+    press: function(e) {
+      if (!this.interactive()) return;
+
+      var p = this.position_from_event(e);
+      this.last_x = p.x;
+      this.last_y = p.y;
+      this.pressed = _.isUndefined(e.button) || e.button == 0;
+      if (this.pressed) this.prevent_default(e);
+    },
+    release: function(e) {
+      if (!this.interactive()) return;
+
+      if (e.type == 'mouseout' && this.is_map_element(e.toElement))
+        return;
+
+      if (!this.dragging && this.pressed) {
+        if (!this.tap_timer) {
+          this.tap_timer = setTimeout(_.bind(function(e) {
+            this.tap(e);
+          }, this, e), 360);
+        }
+        else {
+          clearTimeout(this.tap_timer);
+          this.double_tap(e);
+        }
+      }
+      if (this.pressed) this.prevent_default(e);
+      this.pressed = this.dragging = false;
+    },
+    tap: function(e) {
+      delete this.tap_timer;
+      _.trigger('map:tap', {
+        position: this.position_from_event(e),
+        location: this.location_from_event(e)
+      });
+    },
+    double_tap: function(e) {
+      delete this.tap_timer;
+      _.trigger('map:doubleTap', {
+        position: this.position_from_event(e),
+        location: this.location_from_event(e)
+      });
+    },
+    move: function(e) {
+      if (!this.interactive()) return;
+      var p = this.position_from_event(e);
+
+      if (this.pressed)  this.dragging = true;
+      if (this.dragging) {
+
+        var distance_x = p.x - this.last_x;
+        var distance_y = p.y - this.last_y;
+
+        var position = this.map.position();
+        position.x -= distance_x;
+        position.y -= distance_y;
+
+        var location = position_to_location(
+          position, this.map.span());
+        this.map.pan(location.latitude, location.longitude);
+        this.prevent_default(e);
+      }
+
+      this.last_x = p.x;
+      this.last_y = p.y;
+    },
+
+    is_map_element: function(element) {
+      while (element != null && element.nodeName != "BODY") {
+        if (element == this.map.element) return true;
+        element = element.offsetParent;
+      }
+      return false;
+    },
+
+    prevent_default: function(e) {
+      if (e.preventDefault) e.preventDefault();
+    },
+
+    position_from_event: function(e) {
+      if (this.element.getBoundingClientRect) {
+        var box = this.element.getBoundingClientRect();
+        return {
+          x: e.clientX - box.left,
+          y: e.clientY - box.top
+        };
+      }
+
+      return {
+        x: e.clientX - this.element.offsetLeft,
+        y: e.clientY - this.element.offsetTop
+      };
+    },
+
+    location_from_event: function(e) {
+      var pos = this.position_from_event(e);
+      var center = this.map.position();
+      pos.x += (center.x - this.map.width / 2);
+      pos.y += (center.y - this.map.height / 2);
+      return position_to_location(pos, this.map.span());
+    }
+  });
 
   return Map;
 })();

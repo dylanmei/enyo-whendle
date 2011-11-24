@@ -11,28 +11,36 @@ SlippyMap.Sunlight = (function() {
     },
 
     draw: function(context) {
-      if (!this.can_draw(context)) return;
-
       this.element.style.webkitTransform = 'translate3d(' +
         Math.round((context.width / 2) - context.x) + 'px,' +
         Math.round((context.height / 2) - context.y) + 'px,0)';
-      var cols = overlay_column_range(context);
 
+      if (!this.can_draw(context)) return;
+
+      var pos = context.location_to_position(0, 0);
+      var left = pos.x - ((context.span / 360) * context.hour_angle);
+      pos = {
+        x: Math.round(left) - (context.span / 2), y: 0
+      };
+
+      var cols = overlay_column_range(context);
       for (var col = cols.first; col <= cols.last; col++) {
-        this.draw_overlay(context, col);
+        this.draw_overlay(context, pos, col);
       }
+
+      this.declination = context.declination;
+      this.hour_angle = context.hour_angle;
     },
 
     can_draw: function(context) {
-      return context.declination !== undefined;
+      if (context.declination === undefined) return false;
+
+      return context.declination != this.declination ||
+             context.hour_angle != this.hour_angle;
     },
 
-    draw_overlay: function(context, column) {
+    draw_overlay: function(context, position, column) {
       var key = overlay_element_identity(column, context.declination);
-      var left = context.x - ((context.span / 360) * context.hour_angle);
-      var position = {
-        x: Math.round(left) - (context.span / 2), y: 0
-      };
 
       var element = document.getElementById(key);
       if (!element) {
@@ -86,7 +94,6 @@ SlippyMap.Sunlight = (function() {
       last: Math.ceil(extent_x / context.span) - 1
     }
   }
-
 
   return Sunlight;
 })();
