@@ -4,7 +4,7 @@
     kind: enyo.Control,
     className: 'slippy-map',
     published: { tracking: false },
-    events: { onTap: '', onDoubleTap: '' },
+    events: { onPan: '', onTap: '', onDoubleTap: '' },
     create: function() {
       this.inherited(arguments);
     },
@@ -12,10 +12,7 @@
       this.inherited(arguments);
       this.map = new SlippyMap.Map(this.hasNode(), new Tyler());
       this.trackingChanged();
-      _.observe('map:tap',
-        _.bind(on_tap, this));
-      _.observe('map:doubleTap',
-        _.bind(on_double_tap, this));      
+      observe_map_events.call(this);
     },
     pan: function(latitude, longitude) {
       if (this.map) this.map.pan(latitude, longitude);
@@ -43,6 +40,15 @@
     }
   };
 
+  function observe_map_events() {
+    _.observe('map:pan', _.bind(on_pan, this));
+    _.observe('map:tap', _.bind(on_tap, this));
+    _.observe('map:doubleTap', _.bind(on_double_tap, this));      
+  }
+
+  function on_pan(e) {
+    this.doPan(e);
+  }
   function on_tap(e) {
     this.doTap(e);
   }

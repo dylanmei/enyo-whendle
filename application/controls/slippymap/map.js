@@ -206,31 +206,32 @@ SlippyMap.Map = (function() {
 
       if (!this.dragging && this.pressed) {
         if (!this.tap_timer) {
-          this.tap_timer = setTimeout(_.bind(function(e) {
-            this.tap(e);
-          }, this, e), 360);
+          this.tap_timer = setTimeout(
+            _.bind(this.tap, this, e), 360
+          );
         }
         else {
           clearTimeout(this.tap_timer);
           this.double_tap(e);
         }
       }
-      if (this.pressed) this.prevent_default(e);
+      if (this.pressed)
+        this.prevent_default(e);
       this.pressed = this.dragging = false;
     },
     tap: function(e) {
       delete this.tap_timer;
-      _.trigger('map:tap', {
-        position: this.position_from_event(e),
-        location: this.location_from_event(e)
-      });
+      this.trigger_event('map:tap',
+        this.position_from_event(e),
+        this.location_from_event(e)
+      );
     },
     double_tap: function(e) {
       delete this.tap_timer;
-      _.trigger('map:doubleTap', {
-        position: this.position_from_event(e),
-        location: this.location_from_event(e)
-      });
+      this.trigger_event('map:doubleTap',
+        this.position_from_event(e),
+        this.location_from_event(e)
+      );
     },
     move: function(e) {
       if (!this.interactive()) return;
@@ -250,10 +251,18 @@ SlippyMap.Map = (function() {
           position, this.map.span());
         this.map.pan(location.latitude, location.longitude);
         this.prevent_default(e);
+        this.trigger_event('map:pan', position, location);
       }
 
       this.last_x = p.x;
       this.last_y = p.y;
+    },
+
+    trigger_event: function (type, position, location) {
+      _.trigger(type, {
+        position: position,
+        location: location
+      });
     },
 
     is_map_element: function(element) {

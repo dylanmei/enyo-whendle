@@ -1,9 +1,9 @@
 
 enyo.kind({
-    name: 'Preferences',
-    kind:'extras.AutoPreferencesService',
-    published: {
-        dockDimness:''
-    }
+  name: 'Preferences',
+  kind:'extras.AutoPreferencesService',
+  published: {
+    dockDimness: '',
+    mapLocation: ''
+  }
 });
-
