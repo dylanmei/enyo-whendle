@@ -3,7 +3,7 @@
     name: 'SlippyMap',
     kind: enyo.Control,
     className: 'slippy-map',
-    published: { tracking: false },
+    published: { tracking: true },
     events: { onPan: '', onTap: '', onDoubleTap: '' },
     create: function() {
       this.inherited(arguments);
