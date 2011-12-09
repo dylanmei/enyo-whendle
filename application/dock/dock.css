@@ -4,13 +4,14 @@
 
 .clock {
   position: absolute;
-  right: 20px; top: 0;
+  left: 20px; bottom: 20px;
   z-index: 100;
-  text-align: right;
+  text-align: left;
 }
 
 .clock .time {
   font-size: 4rem;
+  line-height: 3.7rem;
   color: rgba(255, 255, 255, 0.8);
 }
 
