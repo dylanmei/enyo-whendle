@@ -1,0 +1,13 @@
+
+.sound-selector {
+}
+
+.sound-selector .enyo-button {
+  padding: 0 4px;
+}
+
+.sound-selector .enyo-label {
+  text-transform: none;
+  color: inherit;
+  font-size: inherit;
+}
