@@ -99,6 +99,11 @@
   line-height: 0.85rem;
 }
 
+.about-dialog .attribution span {
+  display: block;
+  margin-left: 10px;
+}
+
 .about-dialog .attribution a {
   color: red;
 }
@@ -121,15 +126,6 @@
   font-size: 0.65rem;
   font-style: italic;
   color: #666;
-}
-
-.about-dialog .song,
-.about-dialog .artist {
-  font-weight: bold;
-  font-style: italic;
-}
-
-.about-dialog .album {
 }
 
 .day-picker .enyo-button-depressed {
