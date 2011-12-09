@@ -21,24 +21,13 @@
 
       { kind: 'DayPicker', name: 'days' },
       { kind: 'SoundSelector', name: 'sounds' },
-      // { kind: 'Button', name: 'music', caption: '', components: [
-      //   { kind: 'ListSelector', value: ':default', onSelect: 'on_pick_music', items: [
-      //     { caption: 'Fire Alarm', value: ':default' },
-      //     { caption: 'Music...', value: ':music' }
-      //   ]}
-      // ]},
 
       { kind: 'HFlexBox', className: 'actions', components: [
         { kind: 'Button', name: 'remove', caption: 'Remove', onclick: 'on_delete', className: 'enyo-button-negative' },
         { kind: 'Spacer' },
         { kind: 'Button', name: 'cancel', caption: 'Cancel', flex:1, onclick: 'on_cancel', className: 'enyo-button-dark' },
         { kind: 'Button', name: 'commit', caption: 'Save', flex:1, onclick: 'on_save', className: 'enyo-button-affirmative' }
-      ]},
-
-      // { kind: 'FilePicker', name: 'picker', allowMultiSelect: false,
-      //   fileType: 'audio', //currentRingtonePath: "/media/internal/ringtones/Pre.mp3",
-      //   onPickFile: 'on_change_music'
-      // },
+      ]}
     ],
     create: function() {
       this.addClass('dialog');
@@ -71,7 +60,6 @@
       if (alarm.snooze)
         this.$.snooze.setValue(snooze_value_to_text(alarm.snooze));
 
-      //this.$.music.setCaption(sound_path_to_text(alarm.sound));
       this.$.sounds.setSelected(
         alarm.sound ? alarm.sound : '');
 
@@ -81,16 +69,7 @@
       if (this.$.name.getValue() == '')
         this.$.name.forceFocus();
     },
-    // on_pick_music: function() {
-    //   this.$.picker.currentRingtonePath =
-    //     sound_text_to_path(this.$.music.getCaption());
-    //   this.$.picker.pickFile();
-    // },
-    // on_change_music: function(sender, files) {
-    //   if (files && files.length) {
-    //     this.$.music.setCaption(files[0].fullPath);
-    //   }
-    // },
+
     on_cancel: function() {
       this.close();
     },
@@ -117,7 +96,6 @@
       this.alarm.minute = this.$.time.getValue().minute();
       this.alarm.snooze = snooze_text_to_value(this.$.snooze.getValue())
       this.alarm.sound = this.$.sounds.getSelected();
-//      this.alarm.sound = sound_text_to_path(this.$.music.getCaption());
 
       var self = this;
       _.trigger('alarms:save', {
@@ -139,16 +117,6 @@
       monday: true, tuesday: true, wednesday: true, thursday: true, friday: true
     };
   }
-
-  // function sound_path_to_text(path) {
-  //   if (!path || path == '') return 'sound: Fire Alarm';
-  //   return path;
-  // }
-
-  // function sound_text_to_path(text) {
-  //   if (!text || text == 'sound: Fire Alarm') return '';
-  //   return text;
-  // }
 
   function snooze_value_to_text(value) {
     if (value == 1) return value + ' minute';

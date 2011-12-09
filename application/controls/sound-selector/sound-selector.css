@@ -6,6 +6,10 @@
   padding: 0 4px;
 }
 
+.sound-selector .enyo-listselector {
+  overflow: hidden;  
+}
+
 .sound-selector .enyo-label {
   text-transform: none;
   color: inherit;

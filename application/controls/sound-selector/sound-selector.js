@@ -10,14 +10,13 @@
     className: 'sound-selector', cssNamespace: 'sound-selector',
     published: { selected: '' },    
     events: { onChange: '' },
-    layoutKind: 'HFlexLayout',
     chrome: [
       { kind: 'Button', name: 'label', components: [
         { kind: 'SoundSelectorList', name: 'list',
           hideItem: true,
           onSelect: 'on_list_select',
           onChange: 'on_list_change',
-          popupAlign: 'left',
+          popupAlign: 'right',
           items: [
             { caption: Sounds[0].label, value: Sounds[0].file },
             { caption: Sounds[1].label, value: Sounds[1].file },
@@ -57,6 +56,8 @@
     on_list_select: function(sender, event) {
       if (event.value == 'Choose') {
         event.cancel = true;
+        if (!find_sound_by_file(this.selected))
+          this.$.picker.currentRingtonePath = this.selected;
         this.$.picker.pickFile();
       }   
     },
