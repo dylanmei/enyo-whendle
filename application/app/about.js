@@ -23,7 +23,7 @@
           { content: 'Leave feedback', flex: 1 }
         ]},
         { layoutKind: 'HFlexLayout', onclick: 'sourceHandler', components: [
-          { kind: 'Image', src: 'images/donut.png' },
+          { kind: 'Image', src: 'images/octocat.png' },
           { content: 'Whendle is open source!', flex: 1 }
         ]}
       ]},
