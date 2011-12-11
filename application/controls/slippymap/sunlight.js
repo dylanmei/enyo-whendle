@@ -65,7 +65,7 @@ SlippyMap.Sunlight = (function() {
   }
 
   function new_overlay_image(declination, span) {
-    var which = Math.abs(Math.floor(declination));
+    var which = Math.min(23, Math.round(Math.abs(declination)));
     var image = document.createElement('img');
     image.onload = function() {
       this.style.visibility = 'visible';
